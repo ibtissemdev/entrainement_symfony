@@ -4,7 +4,7 @@ const inputUrl=document.querySelector('#url');
 const btnShortenUrl=document.querySelector('#btnShortenUrl');
 
 
-const URL_SHORTEN = '/ajax/shorten'
+const URL_SHORTEN = '/ajax/shorten';
 
 
 form.addEventListener('submit', function(e) {
