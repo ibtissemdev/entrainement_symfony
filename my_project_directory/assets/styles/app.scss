@@ -60,7 +60,7 @@ body {
   ------------------------- */
   
   .featurette-divider {
-    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+    margin: 2rem 0; /* Space out the Bootstrap <hr> more */
   }
   
   /* Thin out the marketing headings */
@@ -92,4 +92,18 @@ body {
     .featurette-heading {
       margin-top: 7rem;
     }
+  }
+
+  /* RESPONSIVE CSS
+  -------------------------------------------------- */
+
+  .overlay-img {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+top: 0;
+background-position:center ;
+background-size: cover;
+opacity:0.8;
   }
