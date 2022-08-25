@@ -17,10 +17,28 @@ class Hash
      */
     private $id;
 
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
+
+
+//méthode magique __set et _get
+private $data=[]; 
+
+    public function __set($propriete, $valeur):void {
+$this->data[$propriete]=$valeur;
+    }
+
+    public function __get($propriete) {
+if (in_array($propriete,$this->data)) {
+    return $this->data[$propriete]; 
+   
+} else {
+    echo 'propriété innexistante';
+}
+    }
 
     public function getId(): ?int
     {
