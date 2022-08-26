@@ -31,10 +31,17 @@ class UrlController extends AbstractController
     /**
      * @Route("/ajax/shorten", name="url_add")
      */
-    public function add(Request $request)
+    public function add(Request $request): Response
     { // paramètre d'une requête POST
         $longUrl = $request->request->get('url');
 
-        $this->urlService->addUrl($longUrl);
+        if (!$longUrl) {
+            return $this->json([
+                'statusCode'=> 400,
+                'statusText'=> 'MISSING_ARG_URL'
+            ]);
+        }
+
+     $url = $this->urlService->addUrl($longUrl);
     }
 }
