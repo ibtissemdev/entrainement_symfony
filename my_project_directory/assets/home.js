@@ -6,6 +6,11 @@ const btnShortenUrl = document.querySelector('#btnShortenUrl');
 
 const URL_SHORTEN = '/ajax/shorten';
 
+const errorMessages = {
+    'INVALID_ARG_URL': "Impossible de raccourcir ce lien. Ce n'est pas une URL valide",// si l'Url n'existe pas
+    'MISSING_ARG_URL': 'Veuillez fournir une URL valide'// Si l'URL n'est pas valide
+}
+
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -20,7 +25,7 @@ form.addEventListener('submit', function (e) {
 
 const handleData = function (data) {
     // console.log(data);
-    if (data.statusCode <= 400) {
+    if (data.statusCode >= 400) {
         return handleError(data);
     }
     inputUrl.value = data.link;
@@ -39,6 +44,7 @@ const handleData = function (data) {
 const handleError = function (data) {
 const alert=document.createElement('div')
 alert.classList.add('alert','alert-danger','mt-2');
+alert.innerText= errorMessages[data.statusText];
 
-
+shortenCard.after(alert);//Le message s'affiche après le formulaire
 }

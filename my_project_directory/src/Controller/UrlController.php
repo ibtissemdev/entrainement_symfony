@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\UrlRepository;
 use App\Service\UrlService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,5 +55,19 @@ class UrlController extends AbstractController
             'link' => $url->getLink(),
             'longUrl' => $url->getLongUrl()
         ]);
+    }
+
+
+ /**
+     * @Route("/{hash}", name="url_view")
+     */
+    public function view($hash, UrlRepository $urlRepo): Response {
+
+$url= $urlRepo->findOneBy(['hash'=>$hash]);
+
+if(!$url){//S'il n'y a pas d'Url, on retourne l'utilisateur à la page d'accueil
+   return $this->redirectToRoute('app_homepage');
+}
+return $this->redirect($url->getLongUrl());
     }
 }
