@@ -42,6 +42,11 @@ class Url
      */
     private $createdAd;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="urls")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Url
     public function setCreatedAd(\DateTimeImmutable $createdAd): self
     {
         $this->createdAd = $createdAd;
+
+        return $this;
+    }
+
+    public function getUser(): ?user
+    {
+        return $this->user;
+    }
+
+    public function setUser(?user $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

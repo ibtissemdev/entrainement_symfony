@@ -4,28 +4,37 @@ namespace App\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Url;
+use Symfony\Component\Security\Core\Security;
+
+
 
 class UrlService
 {
 
     private EntityManagerInterface $em;
+    private Security $security;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, Security $security)
     {
         $this->em = $em;
+        $this->security=$security;
     }
 
     public function addUrl(string $longUrl, string $domain): Url
     {
         $url = new Url();
+
+        
         $hash = $this->generateHash();
         $link = $_SERVER['HTTP_ORIGIN'] . "/$hash";
+        $user = $this->security->getUser();
 
         $url->setLongUrl($longUrl);
         $url->setDomain($domain);
 
         $url->setHash($hash);
         $url->setLink($link);
+        $user->setUser($user);
         $url->setCreatedAd(new \DateTimeImmutable);
 
         $this->em->persist($url); //Pour insérer dans la base de donnée

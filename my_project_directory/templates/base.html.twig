@@ -33,17 +33,21 @@
 								<a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Home</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">Mes liens</a>
+								{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+									<a class="nav-link" href="#">Mes liens</a>
+								{% endif %}
 							</li>
 
 						</ul>
 
 						<div class="d-flex">
-							{% if is_granted('IS_AUTHENTICATED_FULLY') %}  <!-- S'affiche si l'utilisateur est pas connecté  -->
-									<a class="btn btn-outline-danger me-2" href="{{path('app_logout')}}">Déconnexion</a>
-								{% else %}<!-- Sinon il affiche les boutons connexion et inscription  -->
-									<a class="btn btn-outline-success me-2" href="{{path('app_login')}}">Connexion</a>
-									<a class="btn btn-success" href="{{path('app_register')}}">Inscription</a>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<!-- S'affiche si l'utilisateur est connecté  -->
+								<a class="btn btn-outline-danger me-2" href="{{path('app_logout')}}">Déconnexion</a>
+							{% else %}
+								<!-- Sinon il affiche les boutons connexion et inscription  -->
+								<a class="btn btn-outline-success me-2" href="{{path('app_login')}}">Connexion</a>
+								<a class="btn btn-success" href="{{path('app_register')}}">Inscription</a>
 							{% endif %}
 						</div>
 					</div>
