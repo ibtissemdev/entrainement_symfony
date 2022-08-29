@@ -16,7 +16,9 @@
 							<h1>Le meilleur raccourciceur d'URL.</h1>
 							<p>Un raccourciceur d'Url conçu avec des outils puissants pour vous aider à développer et à protéger votre marque.</p>
 							<p>
-								<a class="btn btn-lg btn-primary" href="#">Inscription</a>
+								{% if is_granted('IS_ANONYMOUS') %} <!-- S'affiche si l'utilisateur n'est pas connecté  -->
+								<a class="btn btn-lg btn-primary" href="#">Inscription</a>.
+								{% endif %}
 							</p>
 						</div>
 					</div>

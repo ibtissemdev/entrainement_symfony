@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			Raccourcisseur d'URL - {% block title %}{% endblock %}
+			Raccourcisseur d'URL -
+			{% block title %}{% endblock %}
 		</title>
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
@@ -38,9 +39,12 @@
 						</ul>
 
 						<div class="d-flex">
-							<a class="btn btn-outline-success me-2" href="{{path('app_login')}}">Connexion</a>
-							<a  class="btn btn-success" href="{{path('app_register')}}">Inscription</a>
-
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}  <!-- S'affiche si l'utilisateur est pas connecté  -->
+									<a class="btn btn-outline-danger me-2" href="{{path('app_logout')}}">Déconnexion</a>
+								{% else %}<!-- Sinon il affiche les boutons connexion et inscription  -->
+									<a class="btn btn-outline-success me-2" href="{{path('app_login')}}">Connexion</a>
+									<a class="btn btn-success" href="{{path('app_register')}}">Inscription</a>
+							{% endif %}
 						</div>
 					</div>
 				</div>
