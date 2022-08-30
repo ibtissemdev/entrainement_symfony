@@ -34,7 +34,7 @@ class UrlService
 
         $url->setHash($hash);
         $url->setLink($link);
-        $user->setUser($user);
+        $url->setUser($user);
         $url->setCreatedAd(new \DateTimeImmutable);
 
         $this->em->persist($url); //Pour insérer dans la base de donnée
