@@ -1,2 +1,29 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Mes liens
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mt-5">
+		<div class="row">
+			<section class="col-lg-6 col-md-12 mx-lg-auto" id="linksSection">
+				<div class="list-group">
+					{% for url in urls %}
+						<div class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{ url.domain }}</h5>
+								<p class=" mb-1 fw-bold">
+									<i class="far fa-chart-bar"></i>
+								</p>
+								<small>{{ url.createdAd|date('d/m/Y')}}</small>
+
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</section>
+		</div>
+	</div>
+
+{% endblock %}

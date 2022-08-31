@@ -86,6 +86,8 @@ return $this->redirect($url->getLongUrl());
       if(!$user || $user->getUrls()->count() === 0){
         return $this->redirectToRoute('app_home');
       }
-      return $this->render('url/list.html.twig');
+      return $this->render('url/list.html.twig', [
+        'urls'=> $user->getUrls()
+      ]);
             }
 }
