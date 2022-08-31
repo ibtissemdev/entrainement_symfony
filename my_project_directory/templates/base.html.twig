@@ -34,7 +34,7 @@
 							</li>
 							<li class="nav-item">
 								{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.urls.count > 0 %}
-									<a class="nav-link" href="#">Mes liens</a>
+									<a class="nav-link" href="{{path('url_list')}}">Mes liens</a>
 								{% endif %}
 							</li>
 

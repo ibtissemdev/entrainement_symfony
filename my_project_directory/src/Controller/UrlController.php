@@ -72,19 +72,20 @@ class UrlController extends AbstractController
 $url= $urlRepo->findOneBy(['hash'=>$hash]);
 
 if(!$url){//S'il n'y a pas d'Url, on retourne l'utilisateur à la page d'accueil
-   return $this->redirectToRoute('app_homepage');
+   return $this->redirectToRoute('app_home');
 }
 return $this->redirect($url->getLongUrl());
     }
 
     /**
-     * @Route("/user/links", name="url_view")
+     * @Route("/user/links", name="url_list")
      */
-    public function list($hash, UrlRepository $urlRepo): Response {
+    public function list(UrlRepository $urlRepo): Response {
 
       $user = $this->getUser();
       if(!$user || $user->getUrls()->count() === 0){
         return $this->redirectToRoute('app_home');
       }
+      return $this->render('url/list.html.twig');
             }
 }
