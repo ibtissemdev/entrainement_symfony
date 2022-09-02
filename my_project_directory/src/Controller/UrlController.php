@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UrlRepository;
 use App\Service\UrlService;
+use App\Service\UrlStatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,10 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UrlController extends AbstractController
 {
     private UrlService $urlService;
+    private UrlStatisticService $urlStatisticService;
 
-    public function __construct(UrlService $urlService)
+    public function __construct(UrlService $urlService, UrlStatisticService $urlStatisticService)
     {
         $this->urlService = $urlService;
+        $this->urlStatisticService = $urlStatisticService;
     }
 
     /**
