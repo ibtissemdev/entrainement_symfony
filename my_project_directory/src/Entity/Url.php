@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=UrlRepository::class)
  */
@@ -169,8 +170,8 @@ class Url
     public function getAllClicks(): int 
     {
 $clicks = 0;
-foreach($this->statistics as $statistic) {
-    $clicks += $statistic->getClics();
+foreach($this->statistics as $statistics) {
+    $clicks += $statistics->getClicks();
 }
 return $clicks;
     }

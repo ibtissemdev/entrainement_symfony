@@ -27,10 +27,20 @@ $urlStatistic = $this->urlStatisticRepo->findOneBy([
     'date'=>$date
 ]);
 if (!$urlStatistic) {
-    $urlStatistic = new $urlStatistic;
+    $urlStatistic = new urlStatistic;
     $urlStatistic->setUrl($url);
     $urlStatistic->setDate($date);
 }
 return $urlStatistic;
     }
+
+    public function incrementUrlStatistic(UrlStatistic $urlStatistic): UrlStatistic 
+    {
+$urlStatistic->setClicks($urlStatistic->getClicks()+1);
+$this->em->persist($urlStatistic);
+$this->em->flush();
+
+return $urlStatistic;
+    }
+
 }
