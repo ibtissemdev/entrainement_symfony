@@ -17,7 +17,7 @@
 								<small>{{ url.createdAd|date('d/m/Y')}}</small>
 							</div>
 							<p class=" mb-1 fw-bold">
-							{{ url.getAllClicks() }}
+								{{ url.getAllClicks() }}
 								<i class="far fa-chart-bar"></i>
 							</p>
 							<div class="d-flex w-100 justify-content-between">
@@ -36,6 +36,7 @@
 							<button class="btn btn-sm btn-primary" id="btnCopy" disabled>Copier</button>
 							<button class="btn btn-sm btn-success" id="btnStats" disabled>Statistiques</button>
 							<button class="btn btn-sm btn-danger" id="btnDelete" disabled>Supprimer</button>
+
 						</div>
 					</div>
 				</div>
@@ -45,5 +46,5 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ encore_entry_script_tags('list') }}
+	{{ encore_entry_script_tags('list') }}
 {% endblock %}
