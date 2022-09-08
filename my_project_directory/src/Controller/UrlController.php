@@ -115,14 +115,23 @@ class UrlController extends AbstractController
     }
 
      /**
-     * @Route("/statistics/{hash}", name="url_list")
+     * @Route("/statistics/{hash}", name="url_statistics")
      */
-    public function statistics(string $hash, UrlRepository $urlRepo, UrlStatisticRepository $urlStatisticRepo) {
+    public function statistics(string $hash, UrlRepository $urlRepo, UrlStatisticRepository $urlStatisticRepo):Response {
 
         $url = $urlRepo->findOneBy(['hash' => $hash]);
+
         if (!$url) {
             return $this->redirectToRoute('app_home');
         }
+
         $url_statistics = $urlStatisticRepo->findOneByUrl($url);
+
+        $chart = $this->urlStatisticService->createChart($url_statistics['labels'], $url_statistics['datasets']['data']);
+
+        return $this->render('url/statistics.html.twig', [
+            'chart'=> $chart,
+            'domain'=> $url->getDomain()
+        ]);
     }
 }

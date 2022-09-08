@@ -6,7 +6,8 @@ use App\Entity\UrlStatistic;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Url;
 use App\Repository\UrlStatisticRepository;
-
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 class UrlStatisticService
 {
@@ -16,10 +17,12 @@ class UrlStatisticService
     private ChartBuilderInterface $chartBuilder;
 
 
-    public function __construct(EntityManagerInterface $em, UrlStatisticRepository $urlStatisticRepo)
+    public function __construct(EntityManagerInterface $em, UrlStatisticRepository $urlStatisticRepo, ChartBuilderInterface $chartBuilder)
     {
         $this->em = $em;
         $this->urlStatisticRepo = $urlStatisticRepo;
+        $this->chartBuilder= $chartBuilder;
+
     }
 
     public function findOnByUrlAndDate(Url $url, \DateTimeInterface $date): UrlStatistic
@@ -45,7 +48,28 @@ class UrlStatisticService
         return $urlStatistic;
     }
 
-    public function creatChart()
+    public function createChart(array $labels, $data)
     {
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
+
+        $chart->setData([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Nombre total de clics',
+                    'backgroundColor' => 'rgb(51,73,255)',
+                    'borderColor' => 'rgb(51,73,255)',
+                    'data' => $data
+                ]
+            ]
+        ]);
+        $chart->setOptions([
+            'scales' => [
+                'yAxes' => [
+                    ['ticks' => ['min' => 0]]
+                ]
+            ]
+        ]);
+        return $chart;
     }
 }

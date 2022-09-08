@@ -15,6 +15,7 @@ const btnStats = document.querySelector('#btnStats');
 const btnDelete = document.querySelector('#btnDelete');
 
 const URL_DELETE = '/ajax/delete';
+const URL_STATISTICS = '/statistics'
 
 let selectedItem = null;
 let hash = null;
@@ -44,6 +45,13 @@ btnCopy.addEventListener('click', function () {
         copyToast.show();
     });
 });
+
+btnStats.addEventListener('click', function () {
+if(hash) {
+    window.open(`${URL_STATISTICS}/${hash}`);
+}
+})
+
 
 btnDelete.addEventListener('click', function () {
     fetch(`${URL_DELETE}/${hash}`)
