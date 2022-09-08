@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UrlRepository;
+use App\Repository\UrlStatisticRepository;
 use App\Service\UrlService;
 use App\Service\UrlStatisticService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -79,7 +80,7 @@ class UrlController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        if(!$url->getUser()){
+        if (!$url->getUser()) {
             return $this->redirect($url->getLongUrl());
         }
 
@@ -89,19 +90,19 @@ class UrlController extends AbstractController
         return $this->redirect($url->getLongUrl());
     }
 
-     /**
-     * @Route("/ajax/delete", name="url_delete")
+    /**
+     * @Route("/ajax/delete/{hash}", name="url_delete")
      */
-public function delete(string $hash)
-{
-return $this->urlService->deleteUrl($hash);
-}
+    public function delete(string $hash): Response
+    {
+        return $this->urlService->deleteUrl($hash);
+    }
 
 
     /**
      * @Route("/user/links", name="url_list")
      */
-    public function list(UrlRepository $urlRepo): Response
+    public function list(): Response
     {
 
         $user = $this->getUser();
@@ -111,5 +112,17 @@ return $this->urlService->deleteUrl($hash);
         return $this->render('url/list.html.twig', [
             'urls' => $user->getUrls()
         ]);
+    }
+
+     /**
+     * @Route("/statistics/{hash}", name="url_list")
+     */
+    public function statistics(string $hash, UrlRepository $urlRepo, UrlStatisticRepository $urlStatisticRepo) {
+
+        $url = $urlRepo->findOneBy(['hash' => $hash]);
+        if (!$url) {
+            return $this->redirectToRoute('app_home');
+        }
+        $url_statistics = $urlStatisticRepo->findOneByUrl($url);
     }
 }

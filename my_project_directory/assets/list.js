@@ -1,3 +1,12 @@
+import { Toast } from "bootstrap"
+
+const copyToast = new Toast('#copyToast', {
+    autohide: true,
+    delay: 2000
+});
+
+
+
 const listGroupItems = document.querySelectorAll('.list-group-item');
 const actions = document.querySelector('#actions');
 
@@ -29,13 +38,30 @@ listGroupItems.forEach(item => {
     })
 });
 
-btnCopy.addEventListener('click', function(){
-    const link = document.querySelector(`anchor_${hash}`);
+btnCopy.addEventListener('click', function () {
+    const link = document.querySelector(`#anchor_${hash}`);
+    navigator.clipboard.writeText(link.href).then(() => {
+        copyToast.show();
+    });
 });
+
+btnDelete.addEventListener('click', function () {
+    fetch(`${URL_DELETE}/${hash}`)
+        .then(response => response.json())
+        .then(handleData);
+})
 
 const toogleButtonsInteraction = function (isDisabled = false) {
     Array.from(actions.children).forEach(button => {
         button.disabled = isDisabled;
     })
+}
+
+const handleData = function (data) {
+    switch (data.statusCode) {
+        case 'DELETE_SUCCESSFUL':
+            selectedItem.remove();
+            break;
+    }
 }
 

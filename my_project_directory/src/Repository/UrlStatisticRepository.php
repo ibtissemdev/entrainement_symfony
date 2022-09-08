@@ -21,6 +21,16 @@ class UrlStatisticRepository extends ServiceEntityRepository
         parent::__construct($registry, UrlStatistic::class);
     }
 
+    public function findOneByUrl(Url $url): array{
+        $qb = $this->createQueryBuilder('us');
+        
+        $result = $qb->innerJoin('us.url','u')
+        ->where($qb->expr()->eq('u.id', $url->getId()))
+        ->getQuery()
+        ->getArrayResult();
+        return $result;
+    }
+
     public function add(UrlStatistic $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
